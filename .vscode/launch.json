@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/man/boj",
-      "program": "/Users/man/boj/build/Debug/outDebug"
+      "cwd": "/Users/man/algorithm",
+      "program": "/Users/man/algorithm/build/Debug/outDebug"
     }
   ]
 }
