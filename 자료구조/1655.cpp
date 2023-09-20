@@ -22,7 +22,7 @@ int main(void)
 		else if (i == 1)
         {
 			if (tmp > maxheap.top())
-				minheap.push(num);
+				minheap.push(tmp);
 			else {
 				minheap.push(maxheap.top());
 				maxheap.pop();
@@ -36,7 +36,7 @@ int main(void)
 			if (maxheap.top() > minheap.top())
             {
 				maxheap.pop();
-				minheap.push(num);
+				minheap.push(tmp);
 				if (minheap.size() > maxheap.size())
                 {
 					maxheap.push(minheap.top());
