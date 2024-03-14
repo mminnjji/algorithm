@@ -17,14 +17,15 @@
 
 #include <iostream>
 #include <deque>
-
+#include <utility>
 using namespace std;
 // 벰 구조체 없고, 걍 배열 탐색하면서 봐도 될 것 같은데?
 
 void	snake_move(int board[150][150], int n, int d)
 {
-	int flag = count = 0;
-	int i = j = 1;
+	int flag = 0, count = 0;
+
+	int i = 1, j = 1;
 	int	dc;
 	char dir;
 	deque<pair<int, int>> snake;
@@ -49,26 +50,32 @@ void	snake_move(int board[150][150], int n, int d)
 				dcount++;
 			}
 		}
-		// 방향 검사해서 flag 업데이트 해주
+		// 방향 검사해서 flag 업데이트 해줌
+		// 0 우 1 하 2 좌 3 상 
 		if (flag == 0 || flag == 2)
 			j = j + (flag == 0) * 2 - 1;
 		else if (flag == 1 || flag == 3)
-			i = i - (flag == 1) * 2 + 1;
+			i = i + (flag == 1) * 2 - 1;
+		//cout << "위치: " << i <<' '<< j <<"\n";
 		if (board[i][j] == 3 || board[i][j] == 2)
+		{	
 			break;
+		}
 		else if (board[i][j] == 0)
 		{
-			board[snake.front().fisrt][snake.front().second] = 0;
-			snake.pop_front;
-			snake.push_back(make_pair(i)(j));
+			board[i][j] = 2;
+			board[snake.front().first][snake.front().second] = 0;
+			snake.pop_front();
+			snake.push_back(make_pair(i, j));
 		}
 		else if (board[i][j] == 1)
 		{
-			snake.push_back(make_pair(i)(j));
+			board[i][j] = 2;
+			snake.push_back(make_pair(i, j));
 		}
 		count++;		
 	}
-	cout << count;
+	cout << count + 1;
 }
 
 int main()
@@ -76,7 +83,6 @@ int main()
 	int n, a, ar, ac, d;
 	cin >> n;
 	int board[150][150];
-	board = (void )
 	for (int i = 0; i <= n + 1; i++)
 	{
 		for (int j = 0; j <= n + 1; j++)
