@@ -31,8 +31,7 @@ void dfs(int cnt, int current) {
 	}
 
 
-	for (int i = current; i < arr.size(); i++) {
-		if (checked[i] == 0) {
+	c+		if (checked[i] == 0) {
 			checked[i] = 1;
 			dfs(cnt + 1, i);
 			checked[i] = 0;
