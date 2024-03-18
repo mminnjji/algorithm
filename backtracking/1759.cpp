@@ -31,7 +31,7 @@ void dfs(int cnt, int current) {
 	}
 
 
-	c+		if (checked[i] == 0) {
+		if (checked[i] == 0) {
 			checked[i] = 1;
 			dfs(cnt + 1, i);
 			checked[i] = 0;
