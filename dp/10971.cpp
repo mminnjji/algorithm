@@ -1,55 +1,60 @@
-/* 10971 외판원 순회2*/
-/*
-발상 = 생각나는게 없음 
-전체 순회 하는게 오히려 빠르지 않나 라는 생각이 들음 ㅋㅋ*/
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int short_search(int i, int city[12][12], int n)
-{
-	//n이 10개이기 때문에 아무리 많아도,, 10! 정도 아닐까?
-	//10! 이면 개많잖아
-	
-	vector<int> visit;
-	for (int i = 0; i < n; i++)
-	{
-		visit.push_back(0);
-	}
-	for (int i = 0; i < n; i++)
-	{
-		
-	}
-	
-}
+int visited[10] = {0,};
+int min_val = 10000000; 
 
-void city_search(int city[12][12], int n)
+void backtrack(int n, int cnt, int curr, int cost, vector<vector<int>> &city)
 {
-	int sum = 2147483647;
-	// 아 진짜 어렵넹 ;;
-	// 그냥 순회하면 될 것 같다가도,, 아닐 것 같다는 느낌이 들음
+	if (cost >= min_val)
+		return;
+	if (cnt == n)
+	{
+		//출발도시로 돌아오기 가능한지 확인
+		if (city[curr][0] != 0)
+			min_val = min(min_val, cost + city[curr][0]);
+		return ;
+	}
 	for (int i = 0; i < n; i++)
 	{
-		if (sum >= short_search(i))
-			sum = short_search(i, city, n);
+		if (city[curr][i] && !visited[i])
+		{
+			visited[i] = 1;
+			backtrack(n, cnt + 1, i, cost + city[curr][i], city);
+			visited[i] = false;
+		}
 	}
-	cout << sum;
 }
-
+// 근데 dp를 사용하기에는 너무 모든걸 순회해야하지 않나?
+int solution(int n, vector<vector<int>> &city)
+{
+	visited[0] = 1;
+	//1번도시에서 출발하여 원순회를 하기를 원함
+	//1번도시에 방문했다는 flag를 세우고 시작함
+	backtrack(n, 1, 0, 0, city);
+	return min_val;
+}
 
 int main()
 {
 	int n;
-	int city[12][12];
+	vector<vector<int>> cost;
+	int answer;
 
+	//입력
 	cin >> n;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			cin >> city[i][j];
+	cost.assign(n, vector<int>(n, 0));
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> cost[i][j];
 		}
 	}
-	city_search(city, n);
+
+	answer = solution(n, cost);
+
+	//출력
+	cout << answer;
+	return 0;
 }
