@@ -3,18 +3,13 @@
 using namespace std;
 
 /*1213 펠린드롬만들기*/
-/* 거지같은 문제임
-팰린드롬같은걸 왜 사랑하는진 몰라도 사랑한다고함
-그냥 대칭되나? 만 물으면 쉬울 것같은데
-사전순으로 앞서는 문자열을 출력하라는걸 보면
-문자열을 탐색할때에도 사전순으로 가장 작은걸 먼저 찾아야됨*/
 
-int dictionary_first(string str, int len)
+int dictionary_first(string str)
 {
-	int min = 'Z';
+	char min = 91;
 	int min_idx = -1;
 
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < str.size(); i++)
 	{
 		if (str[i] <= min)
 		{
@@ -41,16 +36,16 @@ int find_char(string *str, char c, int n)
   return 0;
 }
 
-void odd_str(string str, int len)
+void odd_str(string str)
 {
 	int i;
 	int	odd_num = 0;
 	int idx = 0;
-	char res[len];
-	res[len - 1] = 0;
+	char res[str.size()];
+	res[str.size() - 1] = 0;
 	while (1)
 	{
-		i = dictionary_first(str, len);
+		i = dictionary_first(str);
 		if (i < 0)
 		{
 			cout << res;
@@ -59,7 +54,7 @@ void odd_str(string str, int len)
 		else if (find_char(&str, str[i], i))
 		{
 			res[idx] = str[i];
-			res[len - idx - 1] = str[i];
+			res[str.size() - idx - 1] = str[i];
 			str[i] = 91;
 			idx++;
 		}
@@ -67,7 +62,7 @@ void odd_str(string str, int len)
 		{
 			if (!odd_num)
 			{
-				res[len / 2] = str[i];
+				res[str.size() / 2] = str[i];
 				str[i] = 91;
 				odd_num++;
 				continue ;
@@ -78,15 +73,15 @@ void odd_str(string str, int len)
 	}
 }
 
-void even_str(string str, int len)
+void even_str(string str)
 {
 	int i;
 	int idx = 0;
-	char res[len];
-	res[len - 1] = 0;
+	char res[str.size()];
+	res[str.size() - 1] = 0;
 	while (1)
 	{
-		i = dictionary_first(str, len);
+		i = dictionary_first(str);
 		if (i < 0)
 		{
 			cout << res;
@@ -95,13 +90,13 @@ void even_str(string str, int len)
 		else if (find_char(&str, str[i], i))
 		{
 			res[idx] = str[i];
-			res[len - idx - 1] = str[i];
+			res[str.size() - idx - 1] = str[i];
 			str[i] = 91;
 			idx++;
 		}
 		else
 		{
-			cout << "I'm Sorry Hansoo";
+			cout << i << "I'm Sorry Hansoo";
 			return ;
 		}
 	}
@@ -110,21 +105,16 @@ void even_str(string str, int len)
 
 int main()
 {
-	int len = 0;
 	string str;
 
 	cin >> str;
-	while (str[len])
+	if (str.size() % 2)
 	{
-		len++;
-	}
-	if (len % 2)
-	{
-		odd_str(str, len);
+		odd_str(str);
 	}
 	else
 	{
-		even_str(str, len);
+		even_str(str);
 	}
 	return (0);
 }
