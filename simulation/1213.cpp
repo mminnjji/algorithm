@@ -4,9 +4,10 @@ using namespace std;
 
 /*1213 펠린드롬만들기*/
 
+// 사전 순으로 가장 빠른 알파벳 탐색
 int dictionary_first(string str)
 {
-	char min = 91;
+	int min = 91;
 	int min_idx = -1;
 
 	for (int i = 0; i < str.size(); i++)
@@ -20,6 +21,7 @@ int dictionary_first(string str)
 	return (min_idx);
 }
 
+//문자열에서 현재 인덱스 제외 인덱스 중 문자 있는지 탐색
 int find_char(string *str, char c, int n)
 {
   int i = 0;
@@ -28,7 +30,7 @@ int find_char(string *str, char c, int n)
     {
       if ((*str)[i] == c && i != n)
       {
-        (*str)[i] = 91;
+        (*str)[i] = 92;
         return 1;
       }
       i++;
@@ -36,67 +38,65 @@ int find_char(string *str, char c, int n)
   return 0;
 }
 
+// 홀수일때
 void odd_str(string str)
 {
 	int i;
-	int	odd_num = 0;
-	int idx = 0;
-	char res[str.size()];
-	res[str.size() - 1] = 0;
+	int odd = 0;
+	string part1 = "", part2 = "", part3 = "";
 	while (1)
 	{
 		i = dictionary_first(str);
 		if (i < 0)
 		{
-			cout << res;
+			cout << part1 << part2 << part3;
 			return ;
 		}
 		else if (find_char(&str, str[i], i))
 		{
-			res[idx] = str[i];
-			res[str.size() - idx - 1] = str[i];
-			str[i] = 91;
-			idx++;
+			part1 += str[i];
+			part3 = str[i] + part3;
+			str[i] = 92;
 		}
 		else
 		{
-			if (!odd_num)
+			if (!odd) // 알파벳 탐색 실패시 -> 가운데 넣기 + 플래그 세우기
 			{
-				res[str.size() / 2] = str[i];
-				str[i] = 91;
-				odd_num++;
-				continue ;
+				part2 = str[i];
+				str[i] = 92;
+				odd = 1;
 			}
-			cout << "I'm Sorry Hansoo";
-			return ;
+			else
+			{
+				cout << odd << i << "I'm Sorry Hansoo";
+				return ;
+			}
 		}
 	}
 }
 
+//짝수일때
 void even_str(string str)
 {
 	int i;
-	int idx = 0;
-	char res[str.size()];
-	res[str.size() - 1] = 0;
+	string part1 = "", part2 = "", part3 = "";
 	while (1)
 	{
-		i = dictionary_first(str);
-		if (i < 0)
+		i = dictionary_first(str); // 가장 빠른 알파벳 탐색
+		if (i < 0)  // 전체 문자열 탐색 완료 
 		{
-			cout << res;
+			cout << part1 << part2 << part3;
 			return ;
 		}
 		else if (find_char(&str, str[i], i))
 		{
-			res[idx] = str[i];
-			res[str.size() - idx - 1] = str[i];
-			str[i] = 91;
-			idx++;
+			part1 += str[i];
+			part3 = str[i] + part3;
+			str[i] = 92;
 		}
 		else
 		{
-			cout << i << "I'm Sorry Hansoo";
+			cout << "I'm Sorry Hansoo";
 			return ;
 		}
 	}
